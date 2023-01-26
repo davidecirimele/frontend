@@ -14,6 +14,7 @@ import  Administrator from './pages/Administrator';
 import { Homepage } from './pages/Homepage';
 
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import SubmitChecker from './pages/SubmitChecker';
 
 
 
@@ -32,6 +33,7 @@ const App = () => {
           <Route path="/studentenrolled" element={<Studentenrolled/>}/>
           <Route path="/homepage" element={<Homepage/>}/>
           <Route path="/administrator" element={<Administrator/>}/>
+          <Route path="/administrator/submition/:id" element={<SubmitChecker/>}/>
       </Routes>
     </BrowserRouter>
   );

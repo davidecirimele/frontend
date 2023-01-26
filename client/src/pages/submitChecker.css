@@ -1,0 +1,38 @@
+
+.checker-header {
+    background-color: #393E46;
+    height: 100px;
+    font-size: 40px;
+    display: block;
+}
+.document-checker {
+    display: flex;
+    justify-content: space-evenly;
+    padding-top: 30px;
+}
+.checker-body {
+    background-color: #393E46;
+}
+.green {
+    color: green;
+    font-weight: 700;
+}
+.red {
+    color: red;
+    font-weight: 700;
+}
+.id-checker {
+    display: flex;
+}
+.back {
+    font-size: 20px;
+    font-weight: 700;
+    text-align: left;
+    color: black;
+}
+.submit-id {
+    text-align: center;
+}
+.doc-status {
+    padding-right: 4px;
+}
