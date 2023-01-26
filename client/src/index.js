@@ -33,7 +33,7 @@ const App = () => {
           <Route path="/studentenrolled" element={<Studentenrolled/>}/>
           <Route path="/homepage" element={<Homepage/>}/>
           <Route path="/administrator" element={<Administrator/>}/>
-          <Route path="/administrator/submition/:id" element={<SubmitChecker/>}/>
+          <Route path="/administrator/submition/:username" element={<SubmitChecker/>}/>
       </Routes>
     </BrowserRouter>
   );
@@ -43,3 +43,5 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(<App />);
 
 export default App;
+
+

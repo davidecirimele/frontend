@@ -41,7 +41,13 @@ function StudentLogin() {
       sessionStorage.setItem("token", response.data.key);
       sessionStorage.setItem("isLoggedIn", true);
       console.log(sessionStorage.getItem("token"))
-      window.location.href = '/dashboard';
+      if(sessionStorage.getItem("token") == '651067ddfa6de0595d71e99e327f4adf809882ce'){
+        window.location.href = '/administrator';
+      }
+      else{
+        window.location.href = '/dashboard';
+      }
+      
     }catch (error) {
       console.log(error);
  
