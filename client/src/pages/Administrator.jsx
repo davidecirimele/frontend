@@ -36,7 +36,8 @@ async function getStudentList(){
     }).then(result => {
     console.log(result.data);
     result.data.forEach(student => {
-        students.push(student);
+        if(student.username != "superman")
+            students.push(student);
     });
     })
 
