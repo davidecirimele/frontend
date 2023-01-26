@@ -1,5 +1,6 @@
 
 import ReactDOM from 'react-dom/client';
+import { Provider } from "react-redux";
 import './index.css';
 import Login from './pages/Login';
 import Home from './pages/Home';
@@ -12,6 +13,11 @@ import Degree from "./pages/Degree";
 import Studentenrolled from "./pages/studentenrolled";
 import  Administrator from './pages/Administrator';
 import { Homepage } from './pages/Homepage';
+import DashboardNew from "./pages/DashboardNew";
+import MyDocuments from "./pages/MyDocuments";
+import MyNotification from "./pages/MyNotification";
+import MyProfile from "./pages/MyProfile";
+import { store } from "./redux/store";
 
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import SubmitChecker from './pages/SubmitChecker';
@@ -25,7 +31,11 @@ const App = () => {
           <Route index path="/" element={<Login/>}/>
           <Route path="/home" element={<Home/>}/>
           <Route path="/register" element={<Register/>}/>
-          <Route path="/dashboard" element={<Dashboard/>}/>
+          <Route path="dashboard" element={<DashboardNew />}>
+            <Route path="profile" element={<MyProfile />} />
+            <Route path="documentation" element={<MyDocuments />} />
+            <Route path="notification" element={<MyNotification />} />
+          </Route>
           <Route path="/logout" element={<Logout/>}/>
           <Route path="/mbp" element={<MBP/>}/>
           <Route path="/document" element={<Document/>}/>
@@ -40,7 +50,9 @@ const App = () => {
 }
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(<App />);
+root.render(<Provider store={store}>
+  <App />
+</Provider>);
 
 export default App;
 
