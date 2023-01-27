@@ -40,7 +40,7 @@ const MyDocuments = () => {
                 {documents?.map(document => (
                     <div key={document.id_number} className="document-card">
                         <div className="left-side">
-                            <img src = { document.document_img } className="document-icon"  width="20%" height="20%"/>
+                            <img src = { document.document_img } className="document-icon"  width="20%" height="20%" alt='icons/document_icon.png'/>
                         </div>
                         <div className="rightside">
                             <div className="document-type">
