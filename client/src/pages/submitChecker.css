@@ -11,10 +11,18 @@
 .table-container{
     animation: fadeIn 1s;
     padding-top: 16px;
-    max-width: 1200px;
+    margin:auto;
+    background-color: #393E46;
+    border-radius: 5px;
+    padding-top: 24px;
 }
 .sticky {
     text-align: left;
+}
+.table-bg {
+    padding-top: 60px;
+
+    background-color: #393E46;
 }
 
 .checker-header {
@@ -31,6 +39,12 @@
 .checker-body {
     background-color: #393E46;
 }
+.id-images {
+    text-align: center;
+}
+.id-icon {
+    width: 100px;
+}
 .green {
     color: green;
     font-weight: 700;
@@ -41,6 +55,12 @@
 }
 .id-checker {
     display: flex;
+}
+.text-table{
+    color: #EEEEEE;
+    text-align: center;
+    font-weight: 700;
+    font-size: 32px;
 }
 .back {
     font-size: 20px;
@@ -55,5 +75,5 @@
     padding-right: 4px;
 }
 .appliances-table {
-    text-align: center;
+    margin: auto;
 }
