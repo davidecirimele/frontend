@@ -13,6 +13,24 @@
   padding: 20px;
 }
 
+.button-div {
+  align-self: center;
+  border-radius: 10px;
+  margin: 10px;
+  padding: 20px;
+}
+
+.documents-container {
+  display: flex;
+}
+
+.document-card{
+  width: 33%;
+  border-radius: 10px;
+  margin: 10px;
+  padding: 20px;
+}
+
 /* .sidebar-container{
     flex: 1;
     margin: 10px;

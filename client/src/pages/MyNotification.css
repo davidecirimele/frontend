@@ -5,17 +5,31 @@
     min-height: 100vh;
     background-color: #282c34; 
   }
+  
   .homeContainer {
-        margin-left: 10px;
+    display: contents;
+    margin-left: 10px;
     /* background-color: cadetblue; */
     /* box-shadow: 1px 1px 10px 10px rgba(2, 1, 1, 0.47); 
      box-shadow: -10px -4px 10px -5px rgba(0, 0, 0, 0.75);
     -webkit-box-shadow: -10px -4px 10px -5px rgba(0, 0, 0, 0.75);
     -moz-box-shadow: -10px -4px 10px -5px rgba(0, 0, 0, 0.75); */
-    flex: 3;
     border-radius: 10px;
   }
+
   p {
     font-size: large;
     margin-left: 30px;
+  }
+
+  .notifications-container{
+    display: flow-root;
+  }
+
+  .notification-card{
+    width: 100%;
+    border-radius: 10px;
+    margin: 10px;
+    padding: 20px;
+    display: list-item;
   }
