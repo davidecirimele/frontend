@@ -60,7 +60,10 @@ function SubmitChecker(props) {
         fetchData();
     }, [document, username]);
 
-
+    if (!user) {
+        return <div>Loading...</div>
+    }
+    else
     return (
         <div className="checker-container">
             <NavigationBar />
