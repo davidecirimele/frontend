@@ -1,0 +1,20 @@
+[
+    {
+        "subject": "Mathematics",
+        "registration_date": "27/07/2023",
+        "exam_date": "30/12/2023",
+        "prof": "Mister Bamboo"
+    },
+    {
+        "subject": "English",
+        "registration_date": "27/05/2023",
+        "exam_date": "30/12/2023",
+        "prof": "Mister Tree"
+    },
+    {
+        "subject": "History",
+        "registration_date": "27/05/2023",
+        "exam_date": "30/12/2023",
+        "prof": "Mister Water"
+    }
+]
