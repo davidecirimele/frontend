@@ -1,0 +1,18 @@
+@keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+  
+    to {
+     opacity: 1;
+    }
+  }
+
+.table-container{
+    animation: fadeIn 1s;
+    padding-top: 16px;
+    max-width: 1200px;
+}
+.sticky {
+    text-align: left;
+}

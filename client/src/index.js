@@ -18,6 +18,7 @@ import MyDocuments from "./pages/MyDocuments";
 import MyNotification from "./pages/MyNotification";
 import MyProfile from "./pages/MyProfile";
 import { store } from "./redux/store";
+import Submition from './pages/submition';
 
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import SubmitChecker from './pages/SubmitChecker';
@@ -44,6 +45,7 @@ const App = () => {
           <Route path="/homepage" element={<Homepage/>}/>
           <Route path="/administrator" element={<Administrator/>}/>
           <Route path="/administrator/submition/:username" element={<SubmitChecker/>}/>
+          <Route path="/tab" element={<Submition/>}/>
       </Routes>
     </BrowserRouter>
   );
