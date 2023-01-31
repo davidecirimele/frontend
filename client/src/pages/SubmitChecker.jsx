@@ -22,8 +22,12 @@ function SubmitChecker(props) {
     const [users, setUsers] = useState([])
     const [user, setUser] = useState(null);
     const [document, setDocument] = useState(null);
+    const [bookedtests, setBookedTests] = useState([])
+    const [studentsenrolled, setStudentsEnrolled] = useState([])
 
     let { username } = useParams()
+
+    
 
 
     useEffect(() => {
@@ -60,9 +64,104 @@ function SubmitChecker(props) {
         fetchData();
     }, [document, username]);
 
+    useEffect(() => {
+        async function fetchData() {
+            const getToken = sessionStorage.getItem("token");
+            const testsforuser = [];
+            const bookedtests = await axios.get('http://127.0.0.1:8000/api/booked_test/', {
+                headers: {
+                    'Authorization': `Token ${getToken}`,
+                },
+            });
+            bookedtests.data.forEach(test => {
+                if(test.student === username)
+                    testsforuser.push(test)
+            });
+            setBookedTests(testsforuser);
+        }
+        fetchData()
+    }, []);
+
+    useEffect(() => {
+        async function fetchData() {
+            const getToken = sessionStorage.getItem("token");
+            const students = await axios.get('http://127.0.0.1:8000/api/student_enrolled/', {
+                headers: {
+                    'Authorization': `Token ${getToken}`,
+                },
+            });
+            setStudentsEnrolled(students.data);
+        }
+        fetchData()
+    }, []);
+
     if (!user) {
         return <div>Loading...</div>
     }
+    else if(studentsenrolled.some(student => student.student.username === username))
+    return (
+        <div className="checker-container">
+            <NavigationBar />
+
+
+            <div className="checker-header">
+
+                <a className="back" href="../"> ← Back to list</a>
+                <div className="submit-id">Student - {user && user.username}</div>
+
+            </div>
+            <div className="checker-body">
+                <div className="document-checker">
+                    <div className="id-checker">
+                        <div className="student-status">Student status: </div>
+                        <div className="green">enrolled</div>
+                        <ArticleIcon className="article-icon" />
+                        <div className="doc-status">Document status: </div>
+                        {document ? <div className="green">uploaded</div> : <div className="red">not uploaded</div>}
+                    </div>
+                    
+                </div>
+            </div>
+            <div className="table-bg">
+                <div className="text-table">
+                    Student Info
+                </div>
+                <TableContainer className="table-container" sx={{ borderRadius: "5px" }}>
+                    <Table sx={{ minWidth: 650, backgroundColor: "#232323" }} aria-label="simple table">
+                        <TableHead className="sticky">
+                            <TableRow sx={{ position: "sticky", }}>
+                                <TableCell sx={{ color: "white", lineHeight: 2, fontWeight: 500, fontSize: 15 }} align="center">Department</TableCell>
+                                <TableCell sx={{ color: "white", lineHeight: 2, fontWeight: 500, fontSize: 15 }} align="center">Course</TableCell>
+                            </TableRow>
+                        </TableHead>
+                        <TableBody>
+                            {
+                                studentsenrolled.map((student) => {
+                                    if(student.student.username === username)
+                                    {
+                                        return (
+                                        <TableRow
+                                        key={student.id_number}
+                                        sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                                        >
+                                        <TableCell sx={{ color: "white" }} component="th" scope="row" align="center">
+                                            {student.department}
+                                        </TableCell>
+                                        <TableCell sx={{ color: "white", lineHeight: 3 }} align="center">{student.course}</TableCell>
+                                        </TableRow>
+                                        )
+                                    }
+                                    }
+                                )
+                         }
+                            
+                        </TableBody>
+                    </Table>
+                </TableContainer>
+            </div>
+
+        </div>
+    );
     else
     return (
         <div className="checker-container">
@@ -81,6 +180,8 @@ function SubmitChecker(props) {
                         <ArticleIcon className="article-icon" />
                         <div className="doc-status">Document status: </div>
                         {document ? <div className="green">uploaded</div> : <div className="red">not uploaded</div>}
+                        <div className="student-status">Student status: </div>
+                        <div className="red">Not enrolled</div>
                     </div>
                     
                 </div>
@@ -96,25 +197,23 @@ function SubmitChecker(props) {
                     <Table sx={{ minWidth: 650, backgroundColor: "#232323" }} aria-label="simple table">
                         <TableHead className="sticky">
                             <TableRow sx={{ position: "sticky", }}>
-                                <TableCell sx={{ color: "white", lineHeight: 2, fontWeight: 700, fontSize: 15 }} align="center">Subject</TableCell>
-                                <TableCell sx={{ color: "white", lineHeight: 2, fontWeight: 700, fontSize: 15 }} align="center">Professor</TableCell>
-                                <TableCell sx={{ color: "white", lineHeight: 2, fontWeight: 700, fontSize: 15 }} align="center">Registration Date</TableCell>
-                                <TableCell sx={{ color: "white", lineHeight: 2, fontWeight: 700, fontSize: 15 }} align="center">Exam Date</TableCell>
+                                <TableCell sx={{ color: "white", lineHeight: 2, fontWeight: 500, fontSize: 15 }} align="center">Test</TableCell>
+                                <TableCell sx={{ color: "white", lineHeight: 2, fontWeight: 500, fontSize: 15 }} align="center">Exam Date</TableCell>
+                                <TableCell sx={{ color: "white", lineHeight: 2, fontWeight: 500, fontSize: 15 }} align="center">Score</TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {Registrations.map((registration) => (
+                            {bookedtests.map((registration) => (
 
                                 <TableRow
-                                    key={registration.subject}
+                                    key={registration.student.username}
                                     sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                                 >
                                     <TableCell sx={{ color: "white" }} component="th" scope="row" align="center">
-                                        {registration.subject}
+                                        {registration.test.course_name}
                                     </TableCell>
-                                    <TableCell sx={{ color: "white", lineHeight: 4 }} align="center">{registration.prof}</TableCell>
-                                    <TableCell sx={{ color: "white", lineHeight: 4 }} align="center">{registration.registration_date}</TableCell>
-                                    <TableCell sx={{ color: "white", lineHeight: 4 }} align="center">{registration.exam_date}</TableCell>
+                                    <TableCell sx={{ color: "white", lineHeight: 3 }} align="center">{registration.test.date_time}</TableCell>
+                                    <TableCell sx={{ color: "white", lineHeight: 3 }} align="center">{registration.score}</TableCell>
                                 </TableRow>
                             ))}
                         </TableBody>

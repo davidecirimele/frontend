@@ -54,7 +54,7 @@
     font-weight: 700;
 }
 .id-checker {
-    display: flex;
+    display: block;
 }
 .text-table{
     color: #EEEEEE;
@@ -72,6 +72,10 @@
     text-align: center;
 }
 .doc-status {
+    padding-right: 4px;
+    display: inline;
+}
+.student-status {
     padding-right: 4px;
 }
 .appliances-table {
