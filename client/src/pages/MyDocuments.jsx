@@ -47,14 +47,6 @@ function checkValidity(document){
   }
 }
 
-function addDocument(){
-  window.location.href = '/document';
-}
-
-function addQualification(){
-  window.location.href = '/degree';
-}
-
 async function deleteDocument(id){
   const getToken = sessionStorage.getItem("token");
   await axios.delete('http://127.0.0.1:8000/api/document/'+id,{headers: {
@@ -87,13 +79,6 @@ const MyDocuments = () => {
         <div className="sidebar-container">
             <LeftSide />
         </div>  */}
-      <div className="main-content">
-        <h1>My Documents</h1>
-      </div>
-      <div className = "button-div">
-        <button type="button" onClick = {addDocument}>Add a Document</button>
-        <button type="button" onClick = {addQualification}>Add a Qualification</button>
-      </div>
       <div className="title-content">
         <h1>ID Documents</h1>
       </div>

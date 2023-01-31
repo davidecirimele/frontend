@@ -33,7 +33,7 @@ const appRoutes = [
       icon: <FileOpenOutlined />,
     },
   },
-  {
+  /* {
     path: "notification",
     element: <MyNotification />,
     state: "notification",
@@ -41,7 +41,7 @@ const appRoutes = [
       displayText: "Notification",
       icon: <NotificationAddOutlined />,
     },
-  },
+  }, */
 ];
 
 export default appRoutes;

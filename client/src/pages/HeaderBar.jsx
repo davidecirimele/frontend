@@ -5,6 +5,7 @@ import sizeConfigs from "../configs/sizeConfigs";
 import { useState } from "react";
 import "./HeaderBar.css";
 import DegreeDocument from "../components/DegreeDocument";
+import EnrollStudent from "../components/EnrollStudent";
 
 const HeaderBar = () => {
   const [currentAction, setCurrentAction] = useState("");
@@ -46,7 +47,7 @@ const HeaderBar = () => {
       >
         <div className="header">
           <div className="header-left">
-            <button onClick={Enroll}>Enroll</button>
+            <EnrollStudent>Enroll</EnrollStudent>
             <DegreeDocument>Apply Test</DegreeDocument>
           </div>
 

@@ -7,7 +7,6 @@ import { Password } from "@mui/icons-material";
 
 
 async function fetchProfileInfo(){
-  console.log("fetching")
   const getToken = sessionStorage.getItem("token");
   const student = [];
      await axios.get('http://127.0.0.1:8000/api/student/',{headers: {
@@ -38,8 +37,23 @@ async function fetchBookedTests(){
     return bookedtests
 }
 
+async function fetchStudentEnrolled(){
+  const getToken = sessionStorage.getItem("token");
+  const student = [];
+     await axios.get('http://127.0.0.1:8000/api/student_enrolled/',{headers: {
+      'Authorization': `Token ${getToken}`,
+      },
+    }).then(result => {
+          student.push(result.data);
+          console.log(student);
+    })
+    console.log(student)
+    return student[0][0];
+}
+
 const MyProfile = ()=> {
   const [student, setStudent] = useState(null);
+  const [enrolled, setEnrolled] = useState(null);
   const [bookedtests, setBookedTests] = useState([]);
 
   
@@ -48,11 +62,14 @@ const MyProfile = ()=> {
   }, []);
 
   useEffect(() => {
+    fetchStudentEnrolled().then(result => setEnrolled(result));
+  }, []);
+
+  useEffect(() => {
     fetchBookedTests().then(result => setBookedTests(result));
   }, []);
 
-
-  if(student != null)
+  if(student != null && enrolled == null)
   return (
     <div className="home">
       {/* <div className="sidebar">
@@ -97,6 +114,58 @@ const MyProfile = ()=> {
               
         </div>
   );
+  else if(enrolled != null)
+  return (
+    <div className="home">
+      {/* <div className="sidebar">
+        <LeftSide />
+      </div>  */}
+      <div className="homeContainer">
+        <h1>Profile</h1>
+      <div className="profile-container">
+                
+          <div key={enrolled.student.username} className="profile-card">
+              <div className="left-side">
+                <img src = '/icons/user_logo.png' className="profile-icon"  width="5%" height="5%"/>
+              </div>
+              <div className="profile-field">
+                Matricola: {enrolled.id_number}
+              </div> 
+              <div className="profile-field">
+                Cognome: {enrolled.student.last_name}
+              </div> 
+              <div className="profile-field">
+                Nome: {enrolled.student.first_name}
+              </div> 
+              <div className="profile-field">
+                Email: {enrolled.student.email}
+              </div>
+              <div className="profile-field">
+                Phone number: {enrolled.student.phone_no}
+              </div>
+              <div className="profile-field">
+                Codice Fiscale: {enrolled.student.codice_fiscale}
+              </div>
+             </div>
+          </div>
+          <h1>Degree Course</h1>
+          <div className="booked_tests-container">
+
+            {
+                    <div key={enrolled.course_name} className="test-card">
+                        <div className="rightside">
+                            <div className="test-field">
+                                {"Department: "+enrolled.department+", Course: "+enrolled.course}
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+          </div>
+              
+        </div>
+  );
+
  
     
 }
