@@ -20,7 +20,7 @@ export const MBP = () => {
         
       console.log(getToken);
       console.log(course_grade);
-      axios.post('http://127.0.0.1:8000/api/studentenrolled/', {
+      axios.post('http://127.0.0.1:8000/api/studentchoice/', {
         course_grade: course_grade,
       },{headers: {
         'Authorization': `Token ${getToken}`

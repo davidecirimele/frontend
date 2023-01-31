@@ -13,8 +13,8 @@ export const Studentenrolled = () => {
     }
 
     const submitForm = () => {
-      
-      axios.put('http://127.0.0.1:8000/api/studentenrolled/', {
+
+      axios.put('http://127.0.0.1:8000/api/studentchoice/', {
         course_selected: course_selected,
       }).then(result => {
         console.log(result.data)

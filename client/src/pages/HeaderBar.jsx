@@ -4,6 +4,7 @@ import colorConfigs from "../configs/colorConfigs";
 import sizeConfigs from "../configs/sizeConfigs";
 import { useState } from "react";
 import "./HeaderBar.css";
+import DegreeDocument from "../components/DegreeDocument";
 
 const HeaderBar = () => {
   const [currentAction, setCurrentAction] = useState("");
@@ -26,6 +27,8 @@ const HeaderBar = () => {
     localStorage.removeItem("studentLoginStatus");
     window.location.href = "/";
   };
+
+
   return (
     <>
       <AppBar
@@ -44,17 +47,7 @@ const HeaderBar = () => {
         <div className="header">
           <div className="header-left">
             <button onClick={Enroll}>Enroll</button>
-            <button className="link-btn">
-              Apply now <NavLink to="/mbp">click here</NavLink>
-            </button>
-            <button onClick={ApplyTest}>Apply Test</button>
-
-            <button onClick={() => handleLanguageChange("English")}>
-              English
-            </button>
-            <button onClick={() => handleLanguageChange("Italian")}>
-              Italian
-            </button>
+            <DegreeDocument>Apply Test</DegreeDocument>
           </div>
 
           <div className="header-right">

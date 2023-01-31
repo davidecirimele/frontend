@@ -55,6 +55,17 @@ function addQualification(){
   window.location.href = '/degree';
 }
 
+async function deleteDocument(id){
+  const getToken = sessionStorage.getItem("token");
+  await axios.delete('http://127.0.0.1:8000/api/document/'+id,{headers: {
+  'Authorization': `Token ${getToken}`,
+    },
+  }).then(result => {
+    console.log(result);
+  })
+  window.location.reload(false);
+}
+
 const MyDocuments = () => {
   const [documents, setDocument] = useState([]);
   const [degrees, setDegree] = useState([]);
@@ -100,6 +111,7 @@ const MyDocuments = () => {
                                 Id Number: {document.id_number}
                             </div> 
                             {checkValidity(document)?<div className="green">valid</div> : <div className="red">expired</div>}
+                          <button type="button" onClick={() => deleteDocument(document.id)}>Delete</button>
                         </div>
                     </div>
                 ))}
