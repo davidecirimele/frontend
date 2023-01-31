@@ -148,9 +148,10 @@ const EnrollStudent = () => {
                 <Button
                   colorScheme="blue"
                   onClick={async () => {
-                  if(!submitEnrollStudent()){
+                  if(submitEnrollStudent()){
                     SelectCourseToEnrollModal.onClose();
                   }
+                  window.location.reload(false);
                   }
                 }
                 >
