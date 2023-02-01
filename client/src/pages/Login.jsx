@@ -40,6 +40,7 @@ function StudentLogin() {
       console.log(response)
       sessionStorage.setItem("token", response.data.key);
       sessionStorage.setItem("isLoggedIn", true);
+      sessionStorage.setItem("username", studentLoginData.username);
       console.log(sessionStorage.getItem("token"))
       if(sessionStorage.getItem("token") == '651067ddfa6de0595d71e99e327f4adf809882ce'){
         window.location.href = '/administrator';
