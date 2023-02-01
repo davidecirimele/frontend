@@ -24,9 +24,13 @@ function SubmitChecker(props) {
     const [document, setDocument] = useState(null);
     const [bookedtests, setBookedTests] = useState([])
     const [studentsenrolled, setStudentsEnrolled] = useState([])
+    const [settedscore, setScore] = useState('')
 
     let { username } = useParams()
-
+    
+    const handleScore = (e) => {
+        setScore(e.target.value)
+    }
     
 
 
@@ -94,6 +98,23 @@ function SubmitChecker(props) {
         }
         fetchData()
     }, []);
+
+    async function submitScore(test_id,id){
+        const getToken = sessionStorage.getItem("token");
+        await axios.put('http://127.0.0.1:8000/api/booked_test/'+id, {
+            test_id : test_id,
+            test : test_id,
+            score : settedscore,
+        },{
+                headers: {
+                    'Authorization': `Token ${getToken}`,
+                },
+        }).then(result => {
+            alert("score setted succesfully");
+        }).catch(error => {
+            alert("Something went wrong");
+        });
+    }
 
     if (!user) {
         return <div>Loading...</div>
@@ -216,6 +237,12 @@ function SubmitChecker(props) {
                                     </TableCell>
                                     <TableCell sx={{ color: "white", lineHeight: 3 }} align="center">{registration.test.date_time}</TableCell>
                                     <TableCell sx={{ color: "white", lineHeight: 3 }} align="center">{registration.score}</TableCell>
+                                    <TableCell sx={{ color: "white", lineHeight: 3 }} align="center">
+                                        <input type = "text" placeholder="set score" name="score" onChange={handleScore}></input>
+                                    </TableCell>
+                                    <TableCell sx={{ color: "white", lineHeight: 3 }} align="center">
+                                        <button type = "button" onClick={() => {submitScore(registration.test_id,registration.id,registration)}}>Submit</button>
+                                    </TableCell>
                                 </TableRow>
                             ))}
                         </TableBody>
