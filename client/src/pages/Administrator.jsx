@@ -67,8 +67,8 @@ const Administrator = () => {
                         <div className="rightside">
                             <div className="user-name">
                                 {user.last_name+","+user.first_name}
-                                </div>
-                                <a type="submit" href={`/administrator/submition/${user.username}`} className="role-button">Check submitions</a>
+                            </div>
+                            <a type="submit" href={`/administrator/submition/${user.username}`} className="role-button">Check submitions</a>
                         </div>
                     </div>
                 ))}

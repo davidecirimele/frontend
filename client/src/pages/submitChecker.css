@@ -81,3 +81,12 @@
 .appliances-table {
     margin: auto;
 }
+
+.user-card{
+    display: inline-flex;
+    width: 270px;
+}
+
+.user-container{
+    display: flow-root;
+}

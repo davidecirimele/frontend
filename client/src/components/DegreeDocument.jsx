@@ -62,16 +62,16 @@ const DegreeDocument = () => {
         }
       }).then(result => {
         console.log(result.data);
-        return true;
       })
-        .catch(error => {
-          alert(error);
-        })
-        return false;
+      .catch(error => {
+        alert("Per favore, seleziona il grado di laurea a cui vuoi iscriverti");
+      })
+        
   }
 
   const submitDegreeForm = async(type) => {
     const getToken = sessionStorage.getItem("token");
+    SelectDegree.type_of_degree = type;
     // submitDegreeForm is here to send (post) the information tha tthe user put in the text field to the backend and the database
     const studentFormData = new FormData(); // Creation of a DataForm
     studentFormData.append("type_of_degree", type); // Add information inside
@@ -87,10 +87,17 @@ const DegreeDocument = () => {
       }
     }).then(result => {
       console.log(result.data)
+      setSelectDegree({
+        type_of_degree: "",
+        university_nation: "",
+        year_of_enrollment: "",
+        year_of_graduation: "",
+        discipline: "",
+      });
     }).catch(error=>{
-      alert(error)
+      alert('Per favore, inserisci tutti i dati');
     
-    setSelectDegree({ status: false });
+      setSelectDegree({ status: false });
   })
 }
 
@@ -169,7 +176,7 @@ function checkIdDocument(){
             <Box>
               <Text as="b"> High School Country</Text>
               <Input
-                placeholder="Italy"
+                placeholder="Roma"
                 onChange={handleFormChange}
                 value={SelectDegree.university_nation || ""}
                 name="university_nation"
@@ -177,18 +184,18 @@ function checkIdDocument(){
               />
             </Box>
             <Box>
-              <Text as="b" children="Year of enrollment" />
+              <Text as="b" children="Date of enrollment" />
               <Input
-                placeholder="2024"
+                placeholder="YYYY-MM-DD"
                 onChange={handleFormChange}
                 value={SelectDegree.year_of_enrollment || ""}
                 name="year_of_enrollment"
               />
             </Box>
             <Box>
-              <Text as="b" children="Year of graduation" />
+              <Text as="b" children="Date of graduation" />
               <Input
-                placeholder="2024"
+                placeholder="YYYY-MM-DD"
                 onChange={handleFormChange}
                 value={SelectDegree.year_of_graduation || ""}
                 name="year_of_graduation"
@@ -197,7 +204,7 @@ function checkIdDocument(){
             <Box>
               <Text as="b" children="Discipline" />
               <Input
-                placeholder="Computer Science"
+                placeholder="Diploma Scientifico"
                 onChange={handleFormChange}
                 value={SelectDegree.discipline || ""}
                 name="discipline"
@@ -240,18 +247,18 @@ function checkIdDocument(){
               />
             </Box>
             <Box>
-              <Text as="b" children="Year of enrollment" />
+              <Text as="b" children="Date of enrollment" />
               <Input
-                placeholder="2024"
+                placeholder="YYYY-MM-DD"
                 onChange={handleFormChange}
                 value={SelectDegree.year_of_enrollment || ""}
                 name="year_of_enrollment"
               />
             </Box>
             <Box>
-              <Text as="b" children="Year of graduation" />
+              <Text as="b" children="Date of graduation" />
               <Input
-                placeholder="2024"
+                placeholder="YYYY-MM-DD"
                 onChange={handleFormChange}
                 value={SelectDegree.year_of_graduation || ""}
                 name="year_of_graduation"
@@ -314,7 +321,6 @@ function checkIdDocument(){
 
   const submitIDCardForm = async() => {
 
-    try{
 
       const getToken = sessionStorage.getItem("token");
 
@@ -332,12 +338,36 @@ function checkIdDocument(){
         'Authorization': `Token ${getToken}`,
         },
     }).then(result => {
-      console.log(result.data)
-    }) 
+      alert('Documento inserito con successo!')
+    })
+    .catch(error => {
+      alert('Per favore, inserisci tutti i dati');
+    })
+    
   }
-  catch(error){
-    console.log(error)
+
+  function IDDocumentisValid(){
+    return IDCardInform.id_number != "" && IDCardInform.country_of_issue != "" && IDCardInform.date_of_issue != "" && IDCardInform.date_of_expiration != "" && IDCardInform.type != "";
   }
+
+  function DiplomaisValid(){
+    return SelectDegree.type_of_degree == "Diploma" && SelectDegree.university_nation != "" && SelectDegree.year_of_enrollment != "" && SelectDegree.year_of_graduation != "" && SelectDegree.discipline != "";
+  }
+
+  function BachelorisValid(){
+    return SelectDegree.type_of_degree == "Bachelor" && SelectDegree.university_nation != "" && SelectDegree.year_of_enrollment != "" && SelectDegree.year_of_graduation != "" && SelectDegree.discipline != "";
+  }
+
+  function MasterisValid(){
+    return SelectDegree.type_of_degree == "Master" && SelectDegree.university_nation != "" && SelectDegree.year_of_enrollment != "" && SelectDegree.year_of_graduation != "" && SelectDegree.discipline != "";
+  }
+
+  function CourseChoiceisValid(){
+    return selectedCourse != "";
+  }
+
+  function TestChoiceisValid(){
+    return selectedTest != null;
   }
 
   const DisplayFieldIDCard = () => {
@@ -455,27 +485,33 @@ function checkIdDocument(){
   }
 
   async function submitBookedTest(){
-    const getToken = sessionStorage.getItem("token");
-    
-      await axios.post('http://127.0.0.1:8000/api/booked_test/',{
-        test_id: selectedTest.test_id,
-        test: selectedTest.test_id,
-        score: 0,
-      }, {headers: {
-        'Authorization': `Token ${getToken}`,
-        },
+    if(selectedTest != null)
+    {
+      const getToken = sessionStorage.getItem("token");
       
-      }).then(result => {
-      console.log(result);
-      }).catch(error=>{
-        console.log(error);
-      });
+        await axios.post('http://127.0.0.1:8000/api/booked_test/',{
+          test_id: selectedTest.test_id,
+          test: selectedTest.test_id,
+          score: 0,
+        }, {headers: {
+          'Authorization': `Token ${getToken}`,
+          },
+        
+        }).then(result => {
+          alert('La procedura di iscrizione al test è andata a buon fine! Ricarica la pagina per vederlo nel tuo profilo');
+          setSelectedTest(null);
+        }).catch(error=>{
+          alert(error);
+        });
+    }
+    else
+      alert('Per favore, scegli un test a cui iscriverti');
   }
 
   function filterTestsByName(value){
     const validTests = [];
     SelectDepartment.forEach(test => {
-      if(!validTests.includes(test) && test.course_grade === value)
+      if(test.course_grade === value)
         validTests.push(test);
     });
     return validTests;
@@ -490,7 +526,7 @@ function checkIdDocument(){
     return validDates;
   }
 
-  const [selectedCourse, setSelectedCourse] = useState();
+  const [selectedCourse, setSelectedCourse] = useState("");
   const [selectedTest, setSelectedTest] = useState(null);
 
   const handleSelectDepartmentChange = (name) => {
@@ -587,8 +623,9 @@ function checkIdDocument(){
                 <Button
                   colorScheme="blue"
                   onClick={async () => {
-                    if (!setGradeChoice()) {
-                      await SelectDegreeModal.onClose();
+                    if (course_grade != '') {
+                      setGradeChoice(course_grade);
+                      SelectDegreeModal.onClose();
                       DocumentIDModal.onOpen();
                     }
                   }}
@@ -624,9 +661,17 @@ function checkIdDocument(){
                 <Button
                   colorScheme="blue"
                   onClick={async () => {
-                    if (submitIDCardForm()) {
-                      await DocumentIDModal.onClose();
+                    if (checkIdDocument()) {
+                      DocumentIDModal.onClose();
                       DiplomaModal.onOpen();
+                    }
+                    else
+                    {
+                      submitIDCardForm();
+                      if(IDDocumentisValid()){
+                        DocumentIDModal.onClose();
+                        DiplomaModal.onOpen();
+                      }   
                     }
                   }}
                 >
@@ -654,8 +699,14 @@ function checkIdDocument(){
                 <Button
                   colorScheme="blue"
                   onClick={async () => {
-                  DocumentSelectDepartment.onClose();
-                  TestSelectionModal.onOpen();
+                    if(CourseChoiceisValid())
+                    {
+                      DocumentSelectDepartment.onClose();
+                      TestSelectionModal.onOpen();
+                    }
+                    else{
+                      alert('Per favore, scegli un corso per cui vuoi fare il test');
+                    }
                   }}
                 >
                   {" "}
@@ -686,10 +737,10 @@ function checkIdDocument(){
                 <Button
                   colorScheme="blue"
                   onClick={async () => {
-                    if (submitBookedTest()) {
-                      await TestSelectionModal.onClose();
+                    submitBookedTest();
+                    if (TestChoiceisValid()) {
+                      TestSelectionModal.onClose();
                     }
-                    window.location.reload(false);
                   }}
                 >
                   {" "}
@@ -721,12 +772,26 @@ function checkIdDocument(){
                 <Button
                   colorScheme="blue"
                   onClick={async () => {
-                    if (checkDocumentation("Diploma") || submitDegreeForm("Diploma")) {
-                      await DiplomaModal.onClose();
+
+                    if (checkDocumentation("Diploma")) {
+                      DiplomaModal.onClose();
                       if(course_grade == "Bachelor")
                         DocumentSelectDepartment.onOpen();
                       else
                         BachelorModal.onOpen();
+                    }
+                    else
+                    {
+                      submitDegreeForm("Diploma");
+                      console.log(DiplomaisValid())
+                      if(DiplomaisValid())
+                      {
+                        DiplomaModal.onClose();
+                        if(course_grade == "Bachelor")
+                          DocumentSelectDepartment.onOpen();
+                        else
+                          BachelorModal.onOpen();
+                      }   
                     }
                   }}
                 >
@@ -754,12 +819,24 @@ function checkIdDocument(){
                 <Button
                   colorScheme="blue"
                   onClick={async () => {
-                    if (checkDocumentation("Bachelor") || submitDegreeForm("Bachelor")) {
-                      await BachelorModal.onClose();
+                    if (checkDocumentation("Bachelor")) {
+                      BachelorModal.onClose();
                       if(course_grade == "Doctorate")
                         MasterModal.onOpen();
                       else
                         DocumentSelectDepartment.onOpen();
+                    }
+                    else
+                    {
+                      submitDegreeForm("Bachelor");
+                      if(BachelorisValid())
+                      {
+                        BachelorModal.onClose();
+                        if(course_grade == "Doctorate")
+                          MasterModal.onOpen();
+                        else
+                          DocumentSelectDepartment.onOpen();
+                      }   
                     }
                   }}
                 >
@@ -787,11 +864,21 @@ function checkIdDocument(){
                 <Button
                   colorScheme="blue"
                   onClick={async () => {
-                    if (checkDocumentation("Master") || submitDegreeForm("Master")) {
-                      await MasterModal.onClose();
+                    if (checkDocumentation("Master")) {
+                      MasterModal.onClose();
                       DocumentSelectDepartment.onOpen();
+                    
+                      
                     }
-                    window.location.reload(false);
+                    else
+                    {
+                      submitDegreeForm("Master");
+                      if(MasterisValid())
+                      {
+                        MasterModal.onClose();
+                        DocumentSelectDepartment.onOpen();
+                      }   
+                    }
                   }}
                   
                 >

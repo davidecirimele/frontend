@@ -42,8 +42,8 @@ const EnrollStudent = () => {
         'Authorization': `Token ${getToken}`,
         }
       }).then(result => {
-        console.log("success")
-        console.log(result.data)
+        alert("Complimenti! La tua immatricolazione è avvenuta con successo!")
+        setSelectedCourse(null);
       }).catch(error=>{
         alert("Ci risulta che tu sia già immatricolato, non è possibile immatricolarsi a più di un corso di laurea alla volta")
     }) 
@@ -76,14 +76,21 @@ const EnrollStudent = () => {
       if(!validTests.includes(test) && test.score >= 60)
         validTests.push(test);
     });
-    console.log(validTests);
+    console.log(validTests.length);
     return validTests;
+  }
+
+  function courseSelectionIsValid(){
+    return selectedCourse != null;
   }
 
   const [selectedCourse, setSelectedCourse] = useState(null);
 
   const handleSelectTestChange = (course) => {
-    setSelectedCourse(course);
+    if(selectedCourse == null)
+      setSelectedCourse(course);
+    else
+      setSelectedCourse(null);
   };
 
   const DisplayFieldEnrollment = () => {
@@ -92,7 +99,7 @@ const EnrollStudent = () => {
     }, []);
 
 
-    if(!filterTestsByScore().isEmpty)
+    if(filterTestsByScore().length > 0)
     {
       return (
         <Stack overflow="scroll" maxHeight="300px">
@@ -148,10 +155,13 @@ const EnrollStudent = () => {
                 <Button
                   colorScheme="blue"
                   onClick={async () => {
-                  if(submitEnrollStudent()){
+
+                  if(courseSelectionIsValid()){
+                    submitEnrollStudent();
                     SelectCourseToEnrollModal.onClose();
+                    window.location.reload(false);
                   }
-                  window.location.reload(false);
+                  
                   }
                 }
                 >

@@ -130,6 +130,7 @@ function SubmitChecker(props) {
                     <Table sx={{ minWidth: 650, backgroundColor: "#232323" }} aria-label="simple table">
                         <TableHead className="sticky">
                             <TableRow sx={{ position: "sticky", }}>
+                                <TableCell sx={{ color: "white", lineHeight: 2, fontWeight: 500, fontSize: 15 }} align="center">Number ID</TableCell>
                                 <TableCell sx={{ color: "white", lineHeight: 2, fontWeight: 500, fontSize: 15 }} align="center">Department</TableCell>
                                 <TableCell sx={{ color: "white", lineHeight: 2, fontWeight: 500, fontSize: 15 }} align="center">Course</TableCell>
                             </TableRow>
@@ -144,6 +145,7 @@ function SubmitChecker(props) {
                                         key={student.id_number}
                                         sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                                         >
+                                        <TableCell sx={{ color: "white", lineHeight: 3 }} align="center">{student.id_number}</TableCell>
                                         <TableCell sx={{ color: "white" }} component="th" scope="row" align="center">
                                             {student.department}
                                         </TableCell>

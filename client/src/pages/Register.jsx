@@ -8,6 +8,7 @@ import 'react-notifications/lib/notifications.css';
 import { useNavigate } from "react-router-dom";
 import { NotificationContainer, NotificationManager } from 'react-notifications';
 import axios from "axios";
+import {Select} from "@chakra-ui/react";
 const baseUrl = 'http://127.0.0.1:8000/api/auth/registration/';
 
 
@@ -124,7 +125,10 @@ function StudentRegister (){
                 </div>
                 <div className="field-container">
                   <div className="field-text">Gender:</div>
-                  <input onChange={handleChange} type="text" placeholder="M or F"  name="gender"/>
+                  <Select placeholder="select your gender" onChange={handleChange} name="gender">
+                      <option value="M">Male</option>
+                      <option value="F">Female</option>
+                  </Select>
                 </div>
                 <div className="field-container">
                   <div className="field-text">Date of birth:</div>
